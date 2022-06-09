@@ -1,0 +1,68 @@
+Lab 6
+Juan Manuel Sialo
+
+Regresion
+
+#1. Build the plo rasseyanenya from the file for "???? ? ??????"
+#================================================================
+#A represent the bydget and B the cash collection
+
+getwd()
+
+#x1=read.table('pulse.txt', header=TRUE, sep='\t')
+#x1
+
+x=read.table('Kassa.txt', header=TRUE)
+x
+
+plot(x$money, x$budget, type='p')
+
+
+#2.Correlation coeffs between groups
+=============================================
+shapiro.test(x$money);
+shapiro.test(x$budget);
+
+
+#3. Analys with help of boxplots
+=============================================
+
+boxplot(x$money,  x$budget)
+x=x[-39,]
+
+
+shapiro.test(x$money)
+shapiro.test( x$budget)
+cor.test(x$money, x$budget)
+
+#4. Regresion, hypotesis and
+==============================================
+x=x[order(x$budget),]
+x
+summary(regresion)
+regresion=lm(money~budget, data=x)
+regresion$coefficient
+
+
+#5. Draw plot
+==============================================
+plot(money~budget, data=x)
+abline(regresion)
+test=predict(regresion,interval='conf', level=0.95)
+matlines(x$budget, cbind(test), lty=c(1,2,2))
+
+
+#6.Analys
+=================================================
+residuals=regresion$residuals
+shapiro.test(residuals)
+qqnorm(residuals)
+
+
+#7. 
+=================================================
+random = 70
+p = c(1, random)
+prognos = regresion$coefficients%*%p
+prognos
+

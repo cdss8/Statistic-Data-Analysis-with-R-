@@ -1,0 +1,108 @@
+Lab 4
+Juan Manuel Sialo
+
+Generation and Analys of correlations given N random numbers
+1. Normal distribution X1 with N=200
+===============================================================
+a1= mean
+S1= sd
+
+N=200
+a1=14.34
+s1=3.87
+
+x1=rnorm(N,a1,s1)
+x1
+
+
+2.Give 2 correlation coefs: 1-st[0.1,0.2] and 2-nd[0.6-0.9] 
+=================================================================
+r1=0.125
+r2=0.7
+
+
+3. Build X2 and X3 with the formulas
+======================================
+a2=16.897
+s2=2.687
+
+x2= r1*x1 + sqrt(1-r1*r1)*rnorm(N,a2,s2)
+x3= r2*x1 + sqrt(1-r2*r2)*rnorm(N,a2,s2)
+
+x2
+x3
+
+4. Scattering(Raseyaniya) diagrams
+======================================= 
+plot(x1,x2,type='p',col="red",main=" Scatterplot for x1, x2")
+plot(x1,x3,type='p',col="blue",main="Scatterplot for  x1, x3")
+
+
+5. Build par for the correlation r1,r2 and distributions X1and X2, X1 and X3
+==============================================================================
+# We use it to see the conection between distributions
+
+dx1=x1-mean(x1)
+dx2=x2-mean(x2)
+dx3=x3-mean(x3)
+
+powdx1=dx1*dx1
+powdx2=dx2*dx2
+powdx3=dx3*dx3
+
+rx1x2=sum(dx1*dx2)/sqrt(sum(powdx1)*sum(powdx2))
+rx1x3=sum(dx1*dx3)/sqrt(sum(powdx1)*sum(powdx3))
+rx1x2
+rx1x3
+d
+
+6. Stats Student for r1 and r2 and test hypotesis
+==================================================
+
+cor.test(x1,x2)
+cor.test(x1,x3)
+
+stdx1x2 =rx1x2/sqrt(1 - rx1x2*rx1x2)*sqrt(N-2)
+stdx1x3=rx1x3/sqrt(1-rx1x3*rx1x3)*sqrt(N-2)
+
+p=0.975
+toComp=qt(p,N-2)
+
+if(abs(stdx1x2)<toComp){
+print("Is exist a correlation between distributions x1 and x2")
+}else{print("The is not correlation between X1 and X2")} ##ttt
+
+if(abs(stdx1x3)<toComp){
+print("Is exist a correlation between distributions x1 and x3")
+}else{print("The is not correlation between X1 and X3")}
+
+
+7.Confint with help of Fisher's Z transformation
+==============================================================
+# Fisher transformation
+
+t=1/sqrt(N-3)
+
+z2=0.5*log((1+rx1x2)/(1-rx1x2))
+z3=0.5*log((1+rx1x3)/(1-rx1x3))
+
+z2.lower=z2-qnorm(p)*t
+z2.upper=z2+qnorm(p)*t
+
+z3.lower=z3-qnorm(p)*t
+z3.upper=z3+qnorm(p)*t
+
+cat("Z2 fisher interval= [",z2.lower," , ",z2.upper,"]")
+cat("Z3 fisher interval = [",z3.lower," , ",z3.upper,"]")
+
+#Covariance
+# Calculating the corelation's confidence interval with fisher interval
+
+cov1.lower=(exp(2*z2.lower)-1)/(exp(2*z2.lower)+1)
+cov1.upper=(exp(2*z2.upper)-1)/(exp(2*z2.upper)+1)
+
+cov2.lower=(exp(2*z3.lower)-1)/(exp(2*z3.lower)+1)
+cov2.upper=(exp(2*z3.upper)-1)/(exp(2*z3.upper)+1)
+
+cat("cov1 confint = [",cov1.lower," , ",cov1.upper,"]")
+cat("cov1 confint = [",cov2.lower," , ",cov2.upper,"]")

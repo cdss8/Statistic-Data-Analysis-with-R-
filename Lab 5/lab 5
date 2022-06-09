@@ -1,0 +1,102 @@
+Lab 5
+Juan Manuel Sialo 
+
+Group comparison criteria
+====================================
+1
++++++++++++++++++++++++++++++++++++
+1
+========================================
+#Opening the file pulse
+#setwd("E:\Universidad\I+D\???????????????????????? ? ?.?.?\6 c????\?????????? ???????????\Lab 5")
+
+
+getwd()
+x=read.table("pulse.txt", header=TRUE, sep='\t')
+x
+
+CB
+==
+oldpar=par()
+par(mfrow=c(1,2))
+qqnorm(x$CB, main="qqantile of CB", col="red")
+hist(x$CB, col="red",breaks=20,
+     density=15, border="black",
+     ylab="grades", 
+     main="Pulse level of sick patients before medicines",
+     xlab="Patients",)
+
+ED
+==
+oldpar=par()
+par(mfrow=c(1,2))
+qqnorm(x$EB, main="qqantile of EB", col="blue")
+hist(x$EB, col="blue", breaks=20,
+     density=15, border="black",
+     ylab="grades", 
+     main="Pulse level of healf patients before medicines",
+     xlab="Patients",)
+
+CA
+==
+oldpar=par()
+par(mfrow=c(1,2))
+qqnorm(x$CA, main="qqantile of CA", col="green")
+hist(x$CA, col="green", breaks=20,
+     density=15, border="black",
+     ylab="grades", 
+     main="Pulse level of sick patients after medicines",
+     xlab="Patients",)
+
+EA
+==
+oldpar=par()
+par(mfrow=c(1,2))
+qqnorm(x$EA, main="qqantile of EA", col="gold")
+hist(x$EA, col="gold", breaks=20,
+     density=15, border="black",
+     ylab="grades", 
+     main="Pulse level of healf patients after medicines",
+     xlab="Patients",)
+
+#Criteria
+shapiro.test(x$CB)
+shapiro.test(x$EB)
+shapiro.test(x$CA)
+shapiro.test(x$EA)
+
+
+2. Comparison "before" and "after"
+===========================================================================
+#Testing with wilcox test (for dependets variables, for example, "before" and "after")
+#before medicines
+wilcox.test(x$CB,x$EB,var.equal = TRUE) 
+
+#after medicines
+wilcox.test(x$CA,x$EA)
+
+boxplot(x$CB,x$EB,col="gold",main="Comparison of CB and EB",xlab="Patients before medicines")
+boxplot(x$CA,x$EA,col="green",main="Comparison of CA and EA",xlab="Patients After medicines")
+
+3. Comparison "before" and "after"
+=====================================================================
+
+wilcox.test(x$CB,x$CA,var.equal = TRUE) 
+wilcox.test(x$EB,x$EA)
+boxplot(x$CB,x$CA,col="gold",main="Comparison of CB and CA",xlab="Sick Patients ")
+boxplot(x$EB,x$EA,col="green",main="Comparison of CA and EA",xlab="Health Patients")
+
+
+2.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2.1.Conjugacy table "Group" and "Note"
+=========================================================
+
+getwd()
+y=read.table("grades.txt", header=TRUE,fileEncodin="utf-16")
+y
+
+
+
+#2. Hypotesis
+#####fisher.test(y,simulate.p.value = TRUE)&&&
