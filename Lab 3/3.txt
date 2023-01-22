@@ -1,6 +1,5 @@
 Lab 3
-Juan Manuel Sialo
-
+Juan Manuel 
 Group comparison criteria
 
 1. Generate X1 and X2 of 100 random numbers from normal distribution
